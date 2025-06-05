@@ -51,10 +51,24 @@ jobs:
 
       - name: Upload release assets to GitHub
         uses: softprops/action-gh-release@v1
+        if: matrix.os == 'macos-latest' # 조건부 실행 (macOS)
         with:
-          files: |
-            dist/*.dmg
-            dist/*.exe
-            dist/*.AppImage
+          files: dist/*.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release assets to GitHub (Windows)
+        uses: softprops/action-gh-release@v1
+        if: matrix.os == 'windows-latest'
+        with:
+          files: dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release assets to GitHub (Linux)
+        uses: softprops/action-gh-release@v1
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          files: dist/*.AppImage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
