@@ -3,14 +3,14 @@ name: Release
 on:
   push:
     tags:
-      - 'v*' # 예: v1.0.0 형태의 태그가 푸시될 때 실행
+      - 'v*'
 
 jobs:
   release:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -27,6 +27,11 @@ jobs:
         with:
           version: 8
           run_install: false
+
+      - name: 🐛 Debug pnpm install path & version
+        run: |
+          which pnpm
+          pnpm -v
 
       - name: Install dependencies
         run: pnpm install
