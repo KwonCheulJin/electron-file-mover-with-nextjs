@@ -3,27 +3,33 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*' # 예: v1.0.0 형태의 태그가 푸시될 때 실행
 
 jobs:
   release:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Enable Corepack (for pnpm)
+        run: corepack enable
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-          run_install: true
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Build Next.js
         run: pnpm build
@@ -34,4 +40,4 @@ jobs:
       - name: Build and Publish Electron App
         run: pnpm dist
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
