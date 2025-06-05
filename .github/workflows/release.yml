@@ -7,7 +7,11 @@ on:
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
 
     steps:
       - name: Checkout repo
@@ -22,7 +26,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
 
       - name: Enable Corepack (for pnpm)
         run: corepack enable
