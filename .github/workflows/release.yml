@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Clean dist folders
+        run: rm -rf dist dist-electron
+
       - name: Build Next.js
         run: pnpm build
 
