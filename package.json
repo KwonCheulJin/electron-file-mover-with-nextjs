@@ -1,0 +1,191 @@
+{
+  "name": "electron-file-mover",
+  "version": "1.0.0",
+  "description": "Electron 파일 이동 애플리케이션",
+  "main": "dist-electron/main.js",
+  "homepage": "./",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "electron": "electron .",
+    "electron-dev": "concurrently -k \"pnpm dev\" \"pnpm build-electron-ts --watch\" \"wait-on http://localhost:3000 && electron .\"",
+    "build-electron": "pnpm build && pnpm build-electron-ts && electron-builder",
+    "build-electron-ts": "tsc -p tsconfig.electron.json",
+    "dist": "pnpm build && pnpm build-electron-ts && electron-builder --publish=never",
+    "dist-win": "pnpm build && pnpm build-electron-ts && electron-builder --win",
+    "dist-mac": "pnpm build && pnpm build-electron-ts && electron-builder --mac",
+    "dist-linux": "pnpm build && pnpm build-electron-ts && electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps",
+    "clean": "rimraf out dist .next",
+    "rebuild": "pnpm clean && pnpm install && pnpm build"
+  },
+  "dependencies": {
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.0.3",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.2.14",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^12.16.0",
+    "lucide-react": "^0.294.0",
+    "next": "^14.0.0",
+    "next-themes": "^0.4.4",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/electron": "^1.6.12",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "autoprefixer": "^10.0.0",
+    "concurrently": "^8.2.2",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "postcss": "^8.0.0",
+    "postcss-preset-env": "^9.3.0",
+    "rimraf": "^5.0.5",
+    "tailwindcss": "^3.0.0",
+    "typescript": "^5.0.0",
+    "wait-on": "^7.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "electron": "$electron"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/core",
+        "@babel/preset-env"
+      ]
+    }
+  },
+  "build": {
+    "appId": "com.example.electron-file-mover",
+    "productName": "File Mover Master",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "out/**/*",
+      "electron/**/*",
+      "dist-electron/**/*",
+      "node_modules/**/*",
+      "!node_modules/.pnpm/**/*",
+      "!**/*.map",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": ".",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "assets/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "File Mover Master"
+    },
+    "dmg": {
+      "title": "File Mover Master"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "KwonCheulJin",
+      "repo": "electron-file-mover-with-nextjs"
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "keywords": [
+    "electron",
+    "file-manager",
+    "file-mover",
+    "desktop-app",
+    "nextjs",
+    "react",
+    "typescript"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/electron-file-mover.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/electron-file-mover/issues"
+  }
+}
