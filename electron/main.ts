@@ -230,20 +230,15 @@ async function getUniqueFilePath(
   return targetPath;
 }
 
-// ✅ 파일 이동
-async function moveFileSafely(
+// ✅ 파일 복사 (원본 유지)
+async function copyFileSafely(
   source: string,
   destination: string
 ): Promise<void> {
   try {
-    await fs.rename(source, destination);
+    await fs.copyFile(source, destination);
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'EXDEV') {
-      await fs.copyFile(source, destination);
-      await fs.unlink(source);
-    } else {
-      throw error;
-    }
+    throw error;
   }
 }
 
@@ -266,9 +261,10 @@ ipcMain.handle(
     await Promise.all(
       filePaths.map(async sourcePath => {
         const fileName = path.basename(sourcePath);
+        const targetPath = path.join(targetFolder, fileName); // ✅ 고유 파일명 로직 제거
+
         try {
-          const targetPath = await getUniqueFilePath(targetFolder, fileName);
-          await moveFileSafely(sourcePath, targetPath);
+          await copyFileSafely(sourcePath, targetPath); // 그대로 복사
           success.push({ file: fileName, to: targetPath });
         } catch (error) {
           console.error(`❌ 파일 이동 실패: ${fileName}`, error);
