@@ -33,17 +33,17 @@ export const colors: Record<FileFormatType, string> = {
 };
 // 파일 아이콘 매핑
 const fileIconMap: Record<FileFormatType, ReactElement> = {
-  image: <ImageIcon className="h-5 w-5 text-blue-500" />,
-  audio: <Music className="h-5 w-5 text-green-500" />,
-  video: <Video className="h-5 w-5 text-red-500" />,
-  code: <Code className="h-5 w-5 text-purple-500" />,
-  data: <Database className="h-5 w-5 text-orange-500" />,
-  config: <Settings className="h-5 w-5 text-gray-500" />,
-  spreadsheet: <FileSpreadsheet className="h-5 w-5 text-green-600" />,
-  presentation: <FileImage className="h-5 w-5 text-orange-600" />,
-  document: <FileText className="h-5 w-5 text-blue-600" />,
-  archive: <Archive className="h-5 w-5 text-teal-600" />,
-  executable: <Zap className="h-5 w-5 text-cyan-600" />,
+  image: <ImageIcon className="h-5 w-5 stroke-blue-500" />,
+  audio: <Music className="h-5 w-5 stroke-green-500" />,
+  video: <Video className="h-5 w-5 stroke-red-500" />,
+  code: <Code className="h-5 w-5 stroke-purple-500" />,
+  data: <Database className="h-5 w-5 stroke-orange-500" />,
+  config: <Settings className="h-5 w-5 stroke-gray-500" />,
+  spreadsheet: <FileSpreadsheet className="h-5 w-5 stroke-green-600" />,
+  presentation: <FileImage className="h-5 w-5 stroke-orange-600" />,
+  document: <FileText className="h-5 w-5 stroke-blue-600" />,
+  archive: <Archive className="h-5 w-5 stroke-teal-600" />,
+  executable: <Zap className="h-5 w-5 stroke-cyan-600" />,
 };
 
 export const getFileIcon = (type: FileFormatType) => {

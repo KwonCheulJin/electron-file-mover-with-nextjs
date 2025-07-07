@@ -157,5 +157,18 @@ module.exports = {
     'text-cyan-800',
     'dark:bg-cyan-900',
     'dark:text-cyan-300',
+
+    // icon stroke color
+    'stroke-blue-500',
+    'stroke-green-500',
+    'stroke-red-500',
+    'stroke-purple-500',
+    'stroke-orange-500',
+    'stroke-gray-500',
+    'stroke-green-600',
+    'stroke-orange-600',
+    'stroke-blue-600',
+    'stroke-teal-600',
+    'stroke-cyan-600',
   ],
 };

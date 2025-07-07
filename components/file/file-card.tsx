@@ -1,9 +1,8 @@
 'use client';
 
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { getFileIcon, getTypeColor } from '@/lib/file-utils';
+import { getFileIcon } from '@/lib/file-utils';
 import type { FileType } from '@/lib/types';
 
 interface FileCardProps {
@@ -27,40 +26,27 @@ export default function FileCard({
       onClick={onSelect}
     >
       <CardContent className="p-2">
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3">
           <Checkbox
             checked={isSelected}
-            className="mt-1"
             onCheckedChange={onSelect}
             onClick={e => e.stopPropagation()}
           />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              {getFileIcon(file.type)}
+          <div className="xl:max-w-2xl overflow-x-auto whitespace-nowrap">
+            <div className="flex items-center gap-2">
+              <div>{getFileIcon(file.type)}</div>
               <span
-                className="font-medium text-sm text-gray-900 dark:text-white truncate"
+                className="font-medium text-sm text-gray-900 dark:text-white"
                 title={file.name}
               >
                 {file.name}
               </span>
-            </div>
-            <div className="space-y-2">
-              <Badge
-                variant="default"
-                className={`text-xs ${getTypeColor(file.type)}`}
-              >
-                {file.type}
-              </Badge>
-              <div className="text-xs text-gray-500 space-y-1">
-                <div className="flex justify-between">
-                  <span>크기:</span>
-                  <span className="font-medium">{file.size}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>수정일:</span>
-                  <span className="font-medium">{file.modified}</span>
-                </div>
-              </div>
+              <span className="flex justify-between gap-2 text-sm dark:text-gray-600">
+                수정일:{' '}
+                {new Date(file.modified).toLocaleString('ko', {
+                  dateStyle: 'short',
+                })}
+              </span>
             </div>
           </div>
         </div>
